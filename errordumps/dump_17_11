@@ -1,0 +1,58 @@
+ubuntu@RTR-desktop:~/Desktop/Python/Pion herkenning script$ python3 cone_detector.py 
+2020-11-17 11:39:12.444087: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.2
+[ WARN:0] global /home/nvidia/host/build_opencv/nv_opencv/modules/videoio/src/cap_gstreamer.cpp (933) open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
+2020-11-17 11:39:22.888023: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2020-11-17 11:39:22.930928: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:949] ARM64 does not support NUMA - returning NUMA node zero
+2020-11-17 11:39:22.931096: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1742] Found device 0 with properties: 
+pciBusID: 0000:00:00.0 name: NVIDIA Tegra X1 computeCapability: 5.3
+coreClock: 0.9984GHz coreCount: 2 deviceMemorySize: 3.86GiB deviceMemoryBandwidth: 194.55MiB/s
+2020-11-17 11:39:22.931235: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.2
+2020-11-17 11:39:23.009162: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.10
+2020-11-17 11:39:23.082740: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2020-11-17 11:39:23.195195: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2020-11-17 11:39:23.328056: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2020-11-17 11:39:23.402733: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.10
+2020-11-17 11:39:23.407776: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2020-11-17 11:39:23.408175: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:949] ARM64 does not support NUMA - returning NUMA node zero
+2020-11-17 11:39:23.408503: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:949] ARM64 does not support NUMA - returning NUMA node zero
+2020-11-17 11:39:23.408575: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1884] Adding visible gpu devices: 0
+2020-11-17 11:39:23.475689: W tensorflow/core/platform/profile_utils/cpu_utils.cc:108] Failed to find bogomips or clock in /proc/cpuinfo; cannot determine CPU frequency
+2020-11-17 11:39:23.476224: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x242291c0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-11-17 11:39:23.476280: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-11-17 11:39:23.602113: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:949] ARM64 does not support NUMA - returning NUMA node zero
+2020-11-17 11:39:23.602404: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x24214d40 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2020-11-17 11:39:23.602460: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): NVIDIA Tegra X1, Compute Capability 5.3
+2020-11-17 11:39:23.602957: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:949] ARM64 does not support NUMA - returning NUMA node zero
+2020-11-17 11:39:23.603068: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1742] Found device 0 with properties: 
+pciBusID: 0000:00:00.0 name: NVIDIA Tegra X1 computeCapability: 5.3
+coreClock: 0.9984GHz coreCount: 2 deviceMemorySize: 3.86GiB deviceMemoryBandwidth: 194.55MiB/s
+2020-11-17 11:39:23.603240: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.2
+2020-11-17 11:39:23.603360: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.10
+2020-11-17 11:39:23.603444: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2020-11-17 11:39:23.603518: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2020-11-17 11:39:23.603588: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2020-11-17 11:39:23.603658: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.10
+2020-11-17 11:39:23.603727: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2020-11-17 11:39:23.603974: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:949] ARM64 does not support NUMA - returning NUMA node zero
+2020-11-17 11:39:23.604231: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:949] ARM64 does not support NUMA - returning NUMA node zero
+2020-11-17 11:39:23.604294: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1884] Adding visible gpu devices: 0
+2020-11-17 11:39:23.604420: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.2
+2020-11-17 11:39:27.629756: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1283] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-11-17 11:39:27.629844: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1289]      0 
+2020-11-17 11:39:27.629869: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1302] 0:   N 
+2020-11-17 11:39:27.630346: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:949] ARM64 does not support NUMA - returning NUMA node zero
+2020-11-17 11:39:27.630699: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:949] ARM64 does not support NUMA - returning NUMA node zero
+2020-11-17 11:39:27.630846: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1428] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 160 MB memory) -> physical GPU (device: 0, name: NVIDIA Tegra X1, pci bus id: 0000:00:00.0, compute capability: 5.3)
+2020-11-17 11:39:30.371722: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2020-11-17 11:39:39.323219: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.10
+2020-11-17 11:39:42.061544: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 16.00MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2020-11-17 11:39:42.112167: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 32.48MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2020-11-17 11:39:42.112466: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 1.12GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2020-11-17 11:39:42.112723: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 38.68MiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2020-11-17 11:39:42.211846: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 1.08GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2020-11-17 11:39:42.352872: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.14GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2020-11-17 11:39:42.439023: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 1.07GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2020-11-17 11:39:42.530226: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.13GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2020-11-17 11:39:42.621959: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 1.09GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2020-11-17 11:39:42.714277: W tensorflow/core/common_runtime/bfc_allocator.cc:246] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.17GiB with freed_by_count=0. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+
