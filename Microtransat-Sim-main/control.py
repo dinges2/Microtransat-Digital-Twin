@@ -19,7 +19,9 @@ class Control(Module):
         self.target_gimbal_rudder_angle = Register()
 
     def sweep(self):
+        self.target_sail_angle = Register(self.data.getTargetSailAngle())
         self.target_gimbal_rudder_angle = Register(self.data.getTargetRudderAngle())
+        
         # if self.target_sail_angle > 90:
         #     self.target_sail_angle.set(90)
         #
