@@ -1,9 +1,10 @@
 from inputDataInterface import *
 import serial
-
+import sys
 class ArduinoInputData:
     def __init__(self):
-        self.arduino = serial.Serial("COM6", 9600, timeout=.1)
+        self.port = sys.argv[2]
+        self.arduino = serial.Serial(self.port, 9600, timeout=.1)
         self.target_sail_angle = 0
         self.target_gimbal_rudder_angle = 0
         #arduino object with port, baud rate and timeout specified
