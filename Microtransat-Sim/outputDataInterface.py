@@ -6,7 +6,7 @@ class OutputDataInterface:
         self.targetRudderAngle = 0
 
     def setTargetSailAngle(self):
-        return self.targetSailAngle
+        pass
 
     def setTargetRudderAngle(self):
-        return self.targetRudderAngle
+        pass
