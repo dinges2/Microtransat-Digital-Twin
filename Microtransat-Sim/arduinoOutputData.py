@@ -8,41 +8,24 @@ class ArduinoOutputData:
     def __init__(self):
         self.port = 'COM5'
         self.arduino = serial.Serial(self.port, 9600, timeout=.1)
+        self.targetSailAngle = 0
+        self.targetRudderAngle = 0
 
+    def setTargetSailAngle(self, targetSailAngle):
+        self.targetSailAngle = targetSailAngle
 
-    def setTargetSailAngle(self, data):
-        # data = self.sailAngle()
-        self.arduino.write(data)
+    def setTargetRudderAngle(self, targetRudderAngle):
+        self.targetRudderAngle = targetRudderAngle
 
-    def setTargetRudderAngle(self, data):
-        # data = self.rudderAngle()
-        self.arduino.write(data)
+    def sendData(self):
+        sailString = str(self.targetSailAngle).zfill(3)
+        rudderString = str(self.targetRudderAngle).zfill(3)
+        dataString = sailString + rudderString + " "
+        print(dataString)
+        self.arduino.write(dataString.encode())
 
-
-# import serial
-# import time
-#
-# arduino = serial.Serial('COM5', 9600)
-#
-#
-# def stuur_character_HIGH():
-#     arduino.write(l.encode())
-#     print("sending", l)
-#     time.sleep(1)
-#
-#
-# def stuur_character_LOW():
-#     # encode string to arduino
-#     arduino.write(l.encode())
-#     print("sending", l)
-#     time.sleep(1)
-#
-#
-# stuur_character_HIGH()
-# time.sleep(2)
-# stuur_character_HIGH()
-# while (True):
-#     if (arduino.in_waiting > 0):
-#         data = arduino.readline()[:-2]
-#         decoded_data = str(data, 'utf-8')
-#         print("arduino:", decoded_data)
+    # while (True):
+    #     if (self.arduino.in_waiting > 0):
+    #         data = self.arduino.readline()[:-1]
+    #         decoded_data = str(data)
+    #         print("arduino:", decoded_data)

@@ -1,7 +1,7 @@
 from simpylc import *
-import sys
-from inputDataInterface import *
+
 from arduinoInputData import *
+
 
 class Control(Module):
     def __init__(self):
