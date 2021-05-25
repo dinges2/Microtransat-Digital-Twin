@@ -60,6 +60,7 @@ class Sailboat (sp.Module):
 
         self.group('velocity')
         self.drag = sp.Register()
+        self.drag_deacceleration = sp.Register()
         self.acceleration = sp.Register()
         self.forward_velocity = sp.Register()
         self.horizontal_velocity = sp.Register()
@@ -108,7 +109,7 @@ class Sailboat (sp.Module):
             self.perpendicular_sail_force.set(sp.world.wind.wind_scalar * sp.sin(self.sail_alpha))
             self.forward_sail_force.set(self.perpendicular_sail_force * sp.sin(self.local_sail_angle))
             self.forward_sail_force.set(sp.abs(self.forward_sail_force))
-
+            self.drag.set((0.83 * self.forward_velocity - 0.38))
             # Sailing against wind
             min_threshold = (self.global_sail_angle - 180) % 360
             max_threshold = (self.global_sail_angle + 180) % 360
@@ -120,9 +121,9 @@ class Sailboat (sp.Module):
                                                                 sp.world.wind.wind_direction))
 
             # Newton's second law
-            self.drag.set(self.forward_velocity * 0.05)
-            self.acceleration.set(self.forward_sail_force / self.mass - self.drag)
-            self.forward_velocity.set(sp.limit(self.forward_velocity + self.acceleration * sp.world.period, 8))
+            self.drag_deacceleration.set(self.drag / self.mass)
+            self.acceleration.set((self.forward_sail_force / self.mass) - self.drag_deacceleration)
+            self.forward_velocity.set(sp.limit(self.forward_velocity + self.acceleration * sp.world.period, 20))
 
             # Splitting forward velocity vector into vertical and horizontal components
             self.vertical_velocity.set(sp.sin(self.sailboat_rotation) * self.forward_velocity)
