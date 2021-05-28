@@ -10,3 +10,6 @@ class OutputDataInterface:
 
     def setTargetRudderAngle(self):
         pass
+
+    def sendData(self):
+        pass

@@ -6,7 +6,7 @@ import sys
 class ArduinoOutputData:
 
     def __init__(self):
-        self.port = 'COM5'
+        self.port = 'COM6'
         self.arduino = serial.Serial(self.port, 9600, timeout=.1)
         self.targetSailAngle = 0
         self.targetRudderAngle = 0
