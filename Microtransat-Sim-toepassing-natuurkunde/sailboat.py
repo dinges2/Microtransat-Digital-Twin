@@ -8,6 +8,14 @@
 # voorwaards = loodrecht * cos (beta)
 # beta = 90 - hoek van het zeil met de boot
 
+'''
+global sail is de zeil hoek ten opzichte van de wereld
+local sail is de zeil hoek ten opzichte van de boot
+
+
+'''
+
+
 import simpylc as sp
 # import data.data
 # TODO: better naming
