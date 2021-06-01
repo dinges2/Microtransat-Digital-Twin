@@ -81,6 +81,9 @@ class Sailboat (sp.Module):
         self.sail_alpha = sp.Register()
         self.perpendicular_sail_force = sp.Register()
         self.forward_sail_force = sp.Register()
+        self.apparent_wind = sp.Register()
+        self.boot_wind = sp.Register()
+        self.alfa = sp.Register()
         
         self.group('rudder')
         self.target_gimbal_rudder_angle = sp.Register(0)
@@ -114,7 +117,11 @@ class Sailboat (sp.Module):
             # Calculate forward force in N based on the angle between the sail and the wind
             self.sail_alpha.set(sp.abs(self.global_sail_angle - sp.world.wind.wind_direction) % 360)
             self.sail_alpha.set(sp.abs(180 - self.sail_alpha) % 360, self.sail_alpha > 90)
-            self.perpendicular_sail_force.set(sp.world.wind.wind_scalar * sp.sin(self.sail_alpha))
+            self.boot_wind.set(self.forward_velocity)
+            self.alfa.set(abs(sp.world.wind.wind_direction - self.sailboat_rotation)%360)
+            self.apparent_wind.set(sp.sqrt(sp.world.wind.wind_scalar * sp.world.wind.wind_scalar + self.boot_wind * self.boot_wind + 2 * sp.world.wind.wind_scalar * self.boot_wind * sp.cos(self.alfa)))
+
+            self.perpendicular_sail_force.set(self.apparent_wind * sp.sin(self.sail_alpha))
             self.forward_sail_force.set(self.perpendicular_sail_force * sp.sin(self.local_sail_angle))
             self.forward_sail_force.set(sp.abs(self.forward_sail_force))
             self.drag.set((0.83 * self.forward_velocity - 0.38))
