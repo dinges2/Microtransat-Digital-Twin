@@ -118,10 +118,12 @@ class Sailboat (sp.Module):
             self.forward_sail_force.set(self.perpendicular_sail_force * sp.sin(self.local_sail_angle))
             self.forward_sail_force.set(sp.abs(self.forward_sail_force))
             self.drag.set((0.83 * self.forward_velocity - 0.38))
+            if self.drag < 0:
+                self.drag.set(0)
             # Sailing against wind
             min_threshold = (self.global_sail_angle - 180) % 360
             max_threshold = (self.global_sail_angle + 180) % 360
-            self.forward_sail_force.set(0,
+            self.forward_sail_force.set(self.forward_sail_force,
                                         is_sailing_against_wind(min_threshold,
                                                                 max_threshold,
                                                                 self.local_sail_angle,
