@@ -25,12 +25,12 @@ class Control(Module):
         self.pause = Marker()
 
     def sweep(self):
-        if len(sys.argv) > 1:
-            self.target_sail_angle = Register(self.data.getTargetSailAngle())
-            self.target_gimbal_rudder_angle = Register(self.data.getTargetRudderAngle())
-            self.send.setTargetSailAngle(self.target_sail_angle._state)
-            self.send.setTargetRudderAngle(self.target_gimbal_rudder_angle._state)
-            self.send.sendData()
+        # if len(sys.argv) > 1:
+        self.target_sail_angle = Register(self.data.getTargetSailAngle())
+        self.target_gimbal_rudder_angle = Register(self.data.getTargetRudderAngle())
+        self.send.setTargetSailAngle(self.target_sail_angle._state)
+        self.send.setTargetRudderAngle(self.target_gimbal_rudder_angle._state)
+        self.send.sendData()
 
 
         # if self.target_sail_angle > 90:
