@@ -16,36 +16,44 @@ Servo myservo;  // create servo object to control a servo
 void setup() {
   Serial.begin(9600);
   myservo.writeMicroseconds(1500); //set initial servo position if desired
-  myservo.attach(6, 1000, 2000);  //the pin for the servo control, and range if desired
+  myservo.attach(2, 1000, 2000);  //the pin for the servo control, and range if desired
   Serial.println("servo-test-22-dual-input"); // so I can keep track of what is loaded
 }
 
 void loop() {
-  while (Serial.available()) {
-    char c = Serial.read();  //gets one byte from serial buffer
-    readString += c; //makes the string readString
-    delay(2);  //slow looping to allow buffer to fill with next character
-  }
+//  while (Serial.available()) {
+//    char c = Serial.read();  //gets one byte from serial buffer
+//    readString += c; //makes the string readString
+//    delay(2);  //slow looping to allow buffer to fill with next character
+//  }
+//
+//  if (readString.length() >0) {
+//    Serial.println(readString);  //so you can see the captured string 
+//    int n = readString.toInt();  //convert readString into a number
+//
+//    // auto select appropriate value, copied from someone elses code.
+//    if(n >= 500)
+//    {
+//      Serial.print("writing Microseconds: ");
+//      Serial.println(n);
+//      myservo.writeMicroseconds(n);
+//    }
+//    else
+//    {   
+//      Serial.print("writing Angle: ");
+//      Serial.println(n);
+//      myservo.write(n);
+//    }
+//    Serial.print("Last servo command position: ");    
+//    Serial.println(myservo.read());
+//    readString=""; //empty for next input
+//  } 
 
-  if (readString.length() >0) {
-    Serial.println(readString);  //so you can see the captured string 
-    int n = readString.toInt();  //convert readString into a number
-
-    // auto select appropriate value, copied from someone elses code.
-    if(n >= 500)
-    {
-      Serial.print("writing Microseconds: ");
-      Serial.println(n);
-      myservo.writeMicroseconds(n);
+    for (int i = 0; i < 100; i++){
+      delay(100);
+      myservo.write(i);
+        if (i > 98){
+          i = 0;
+      }
     }
-    else
-    {   
-      Serial.print("writing Angle: ");
-      Serial.println(n);
-      myservo.write(n);
-    }
-    Serial.print("Last servo command position: ");    
-    Serial.println(myservo.read());
-    readString=""; //empty for next input
-  } 
 }
