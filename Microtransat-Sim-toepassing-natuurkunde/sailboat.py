@@ -82,6 +82,7 @@ class Sailboat (sp.Module):
         self.perpendicular_sail_force = sp.Register()
         self.forward_sail_force = sp.Register()
         self.apparent_wind = sp.Register()
+        self.apparent_wind_angle = sp.Register()
         self.boot_wind = sp.Register()
         self.alfa = sp.Register()
         
@@ -119,7 +120,12 @@ class Sailboat (sp.Module):
             self.sail_alpha.set(sp.abs(180 - self.sail_alpha) % 360, self.sail_alpha > 90)
             self.boot_wind.set(self.forward_velocity)
             self.alfa.set(abs(sp.world.wind.wind_direction - self.sailboat_rotation)%360)
+
+            #bereken de kracht van de apparent wind door de echte wind te gebruiken en de rotatie van de boot
             self.apparent_wind.set(sp.sqrt(sp.world.wind.wind_scalar * sp.world.wind.wind_scalar + self.boot_wind * self.boot_wind + 2 * sp.world.wind.wind_scalar * self.boot_wind * sp.cos(self.alfa)))
+            
+            #bereken de hoek van de apparent wind aan de hand van de echte wind en de rotatie van de boot
+            self.apparent_wind_angle.set(abs(sp.acos(((sp.world.wind.wind_scalar * sp.cos(self.alfa))+ self.forward_velocity)  / self.apparent_wind))%360)
 
             self.perpendicular_sail_force.set(self.apparent_wind * sp.sin(self.sail_alpha))
             self.forward_sail_force.set(self.perpendicular_sail_force * sp.sin(self.local_sail_angle))

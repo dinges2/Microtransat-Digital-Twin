@@ -46,7 +46,7 @@ class Visualisation (Scene):
         self.gimbal_rudder = Ellipsoid(size=3 * (0.05,), center=(-0.7, 0, -0.10), pivot=(0, 0, 1), color=rudder_color)
 
         # Sail
-        mast_color = (1, 1, 1)
+        mast_color = (0, 1, 1)
         sail_color = (1, 0, 0)
         self.mast = Cylinder(size=(0.05, 0.05, 1), center=(0, 0, 0.5), color=mast_color)
         self.gimbal = Ellipsoid(size=3 * (0.05,), center=(0, 0, -0.25), pivot=(0, 0, 1), color=mast_color)
@@ -58,9 +58,14 @@ class Visualisation (Scene):
         self.wind_vane = Beam(size=(0.17, 0.017, 0.017), center=(0, 0, 1.25), color=wind_vane_color)
         self.wind_vane_pointer = Cone(size=(0.05, 0.05, 0.05), center=(-0.1, 0, 0), axis=(0, 1, 0), angle=-90, color=wind_vane_color)
 
+        #second wind vane
+        second_wind_vane_color = (1, 0, 0)
+        self.second_wind_vane = Beam(size=(0.17, 0.017, 0.017), center=(0, 0, 1.25), color=second_wind_vane_color)
+        self.second_wind_vane_pointer = Cone(size=(0.05, 0.05, 0.05), center=(-0.1, 0, 0), axis=(0, 1, 0), angle=-90, color=second_wind_vane_color)
     def display(self):
         sailboat_position = tEva((world.sailboat.position_x,  world.sailboat.position_y, world.sailboat.position_z + 0.5))
         windvane_position = tEva((world.sailboat.position_x + 0.55,  world.sailboat.position_y + 0.4, world.sailboat.position_z + 0.5))
+        second_windvane_position = tEva((world.sailboat.position_x + 0.30,  world.sailboat.position_y + 0.4, world.sailboat.position_z + 0.5))
         self.camera(
             position=tEva((world.sailboat.position_x,  world.sailboat.position_y, world.sailboat.position_z + 3)),
             focus=tEva((world.sailboat.position_x + 0.00001,  world.sailboat.position_y, world.sailboat.position_z))
@@ -98,3 +103,11 @@ class Visualisation (Scene):
             parts=lambda:
                 self.wind_vane_pointer()
         )
+
+        self.second_wind_vane(
+            position=second_windvane_position,
+            rotation=world.sailboat.apparent_wind_angle,
+            parts=lambda:
+                self.second_wind_vane_pointer()
+        )
+        
