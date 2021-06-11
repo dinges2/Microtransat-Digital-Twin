@@ -17,6 +17,7 @@ local sail is de zeil hoek ten opzichte van de boot
 
 
 import simpylc as sp
+import math
 # import data.data
 # TODO: better naming
 def is_between_angles(n, a, b):
@@ -73,6 +74,7 @@ class Sailboat (sp.Module):
         self.forward_velocity = sp.Register()
         self.horizontal_velocity = sp.Register()
         self.vertical_velocity = sp.Register()
+        self.head_wind_force = sp.Register()
 
         self.group('sail')
         self.target_sail_angle = sp.Register()
@@ -85,6 +87,9 @@ class Sailboat (sp.Module):
         self.apparent_wind_angle = sp.Register()
         self.boot_wind = sp.Register()
         self.alfa = sp.Register()
+        self.boot_direction = sp.Register()
+        self.head_wind_direction = sp.Register()
+        self.true_apparent_wind = sp.Register()
         
         self.group('rudder')
         self.target_gimbal_rudder_angle = sp.Register(0)
@@ -119,14 +124,18 @@ class Sailboat (sp.Module):
             self.sail_alpha.set(sp.abs(self.global_sail_angle - sp.world.wind.wind_direction) % 360)
             self.sail_alpha.set(sp.abs(180 - self.sail_alpha) % 360, self.sail_alpha > 90)
             self.boot_wind.set(self.forward_velocity)
-            self.alfa.set(abs(sp.world.wind.wind_direction - self.sailboat_rotation)%360)
+            self.alfa.set(sp.world.wind.wind_direction - self.sailboat_rotation)
+
+            # headforce = sail area * wind pressure
+            # wind pressure = 0.613 * wind speed ^ 2
+            self.head_wind_force.set(2 * 0.613 * 2 * self.forward_velocity)
 
             #bereken de kracht van de apparent wind door de echte wind te gebruiken en de rotatie van de boot
-            self.apparent_wind.set(sp.sqrt(sp.world.wind.wind_scalar * sp.world.wind.wind_scalar + self.boot_wind * self.boot_wind + 2 * sp.world.wind.wind_scalar * self.boot_wind * sp.cos(self.alfa)))
+            self.apparent_wind.set(sp.sqrt(sp.world.wind.wind_scalar * sp.world.wind.wind_scalar + self.head_wind_force * self.head_wind_force + 2 * sp.world.wind.wind_scalar * self.head_wind_force * sp.cos(self.alfa)))
             
             #bereken de hoek van de apparent wind aan de hand van de echte wind en de rotatie van de boot
-            self.apparent_wind_angle.set(abs(sp.acos(((sp.world.wind.wind_scalar * sp.cos(self.alfa))+ self.forward_velocity)  / self.apparent_wind))%360)
-
+            self.apparent_wind_angle.set(sp.acos(round((sp.world.wind.wind_scalar * sp.cos(self.alfa) + self.head_wind_force) / self.apparent_wind, 2)))
+            # print(round((sp.world.wind.wind_scalar * sp.cos(self.alfa) + self.forward_velocity) / self.apparent_wind, 2))
             self.perpendicular_sail_force.set(self.apparent_wind * sp.sin(self.sail_alpha))
             self.forward_sail_force.set(self.perpendicular_sail_force * sp.sin(self.local_sail_angle))
             self.forward_sail_force.set(sp.abs(self.forward_sail_force))
@@ -156,3 +165,10 @@ class Sailboat (sp.Module):
             self.position_y.set(self.position_y + self.vertical_velocity * 0.001)
             self.rotation_speed.set(0.001 * self.gimbal_rudder_angle * self.forward_velocity)
             self.sailboat_rotation.set((self.sailboat_rotation - self.rotation_speed) % 360)
+            self.boot_direction.set(180 + self.sailboat_rotation)
+            self.head_wind_direction.set((self.boot_direction + 180) % 360)
+
+            if sp.world.wind.wind_direction <= self.head_wind_direction:
+                self.true_apparent_wind.set((self.head_wind_direction - self.apparent_wind_angle) % 360)
+            else:
+                self.true_apparent_wind.set((self.head_wind_direction + self.apparent_wind_angle) % 360)
