@@ -1,32 +1,15 @@
-# TODO: Refactor and document
-# Wat is de hoek van de wind ten opzichten van de x-as, tegen de klok is positief
-# Wat is de gewenste koershoek
-# Wat is het hoekverschil tussen de gewenste koershoek en de windhoek
-# Wat is de zeilstand (helft van stap 3)
-# Wat is de component van de wind die effect heeft op het zeil
-# loodrecht = totale windkracht * sin (alpha)
-# voorwaards = loodrecht * cos (beta)
-# beta = 90 - hoek van het zeil met de boot
-
 '''
 global sail is de zeil hoek ten opzichte van de wereld
 local sail is de zeil hoek ten opzichte van de boot
 
-
 '''
 
-
 import simpylc as sp
-import math
-# import data.data
-# TODO: better naming:
-
-
 
 class Sailboat (sp.Module):
     def __init__(self):
         sp.Module.__init__(self)
-
+        #create the sailboat page that appears onscreen
         self.page('sailboat')
 
         self.group('transform', True)
@@ -61,7 +44,6 @@ class Sailboat (sp.Module):
         self.apparent_wind_angle = sp.Register()
         self.angle_between_course_and_true_wind = sp.Register()
 
-
         self.group('direction')
         self.boot_direction = sp.Register()
         self.head_wind_direction = sp.Register()
@@ -75,7 +57,7 @@ class Sailboat (sp.Module):
         self.group('pause')
         self.pause = sp.Marker()
 
-
+    #function to input the rotation of the rudder and sail
     def input(self):
         self.part('target sail angle')
         self.target_sail_angle.set(sp.world.control.target_sail_angle)
@@ -85,6 +67,7 @@ class Sailboat (sp.Module):
 
         self.pause.mark(sp.world.control.pause)
 
+    #function that is called every few seconds in world.py
     def sweep(self):
         self.local_sail_angle.set(self.local_sail_angle - 1, self.local_sail_angle > self.target_sail_angle)
         self.local_sail_angle.set(self.local_sail_angle + 1, self.local_sail_angle < self.target_sail_angle)
@@ -94,7 +77,6 @@ class Sailboat (sp.Module):
                                      self.gimbal_rudder_angle > self.target_gimbal_rudder_angle)
         self.gimbal_rudder_angle.set(self.gimbal_rudder_angle + 1,
                                      self.gimbal_rudder_angle < self.target_gimbal_rudder_angle)
-
 
         if not self.pause:
             # Calculate forward force in N based on the angle between the sail and the wind
@@ -116,12 +98,11 @@ class Sailboat (sp.Module):
             self.perpendicular_sail_force.set(self.apparent_wind_force * sp.sin(self.angle_between_sail_and_apparent_wind))
 
             # Easy solution for sailing against the wind
-            # If the sail boat is sailing against the wind then set the forward force to zero
+            # If the sailboat is sailing against the wind then set the forward force to zero
             if self.apparent_wind_angle < 90 or self.apparent_wind_angle > 270:
                 self.forward_sail_force.set(0)
             else:
                 self.forward_sail_force.set(self.perpendicular_sail_force * sp.sin(self.local_sail_angle))
-
 
             self.forward_sail_force.set(sp.abs(self.forward_sail_force))
 
@@ -133,8 +114,6 @@ class Sailboat (sp.Module):
             if self.drag < 0:
                 self.drag.set(0)
 
-
-
             # Newton's second law
             self.drag_deacceleration.set(self.drag / self.mass)
             self.acceleration.set((self.forward_sail_force / self.mass) - self.drag_deacceleration)
@@ -144,6 +123,7 @@ class Sailboat (sp.Module):
             self.vertical_velocity.set(sp.sin(self.sailboat_rotation) * self.forward_velocity)
             self.horizontal_velocity.set(sp.cos(self.sailboat_rotation) * self.forward_velocity)
 
+            #update x y positions as well as the directions for the visualisation
             self.position_x.set(self.position_x + self.horizontal_velocity * 0.001)
             self.position_y.set(self.position_y + self.vertical_velocity * 0.001)
             self.rotation_speed.set(0.001 * self.gimbal_rudder_angle * self.forward_velocity)
