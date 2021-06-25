@@ -1,7 +1,6 @@
 '''
-global sail is de zeil hoek ten opzichte van de wereld
-local sail is de zeil hoek ten opzichte van de boot
-
+global sail is the sail angle with respect to the world
+local sail is the sail angle with respect to the boat 
 '''
 
 import simpylc as sp
