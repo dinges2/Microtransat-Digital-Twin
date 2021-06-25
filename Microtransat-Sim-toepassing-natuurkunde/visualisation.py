@@ -106,7 +106,7 @@ class Visualisation (Scene):
 
         self.second_wind_vane(
             position=second_windvane_position,
-            rotation=world.sailboat.true_apparent_wind,
+            rotation=world.sailboat.apparent_wind_direction,
             parts=lambda:
                 self.second_wind_vane_pointer()
         )
