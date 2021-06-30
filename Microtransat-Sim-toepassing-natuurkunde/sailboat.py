@@ -34,6 +34,7 @@ class Sailboat (sp.Module):
         self.perpendicular_sail_force = sp.Register()
         self.forward_sail_force = sp.Register()
         self.apparent_wind_force = sp.Register()
+        self.true_wind_force = sp.Register()
 
         self.group('sail')
         self.target_sail_angle = sp.Register()
@@ -71,6 +72,7 @@ class Sailboat (sp.Module):
         self.local_sail_angle.set(self.local_sail_angle - 1, self.local_sail_angle > self.target_sail_angle)
         self.local_sail_angle.set(self.local_sail_angle + 1, self.local_sail_angle < self.target_sail_angle)
         self.global_sail_angle.set((self.sailboat_rotation + self.local_sail_angle + 180) % 360)
+        self.true_wind_force.set(sp.world.wind.wind_scalar)
 
         self.gimbal_rudder_angle.set(self.gimbal_rudder_angle - 1,
                                      self.gimbal_rudder_angle > self.target_gimbal_rudder_angle)
@@ -88,10 +90,10 @@ class Sailboat (sp.Module):
             self.head_wind_force.set(2 * 0.613 * 2 * self.forward_velocity)
 
             # Calculate the apparent wind force
-            self.apparent_wind_force.set(sp.sqrt(sp.world.wind.wind_scalar * sp.world.wind.wind_scalar + self.head_wind_force * self.head_wind_force + 2 * sp.world.wind.wind_scalar * self.head_wind_force * sp.cos(self.angle_between_course_and_true_wind)))
+            self.apparent_wind_force.set(sp.sqrt(self.true_wind_force * self.true_wind_force + self.head_wind_force * self.head_wind_force + 2 * self.true_wind_force * self.head_wind_force * sp.cos(self.angle_between_course_and_true_wind)))
             
             # Calculate the angle between the head wind and the apparent wind
-            self.apparent_wind_angle.set(sp.acos(round((sp.world.wind.wind_scalar * sp.cos(self.angle_between_course_and_true_wind) + self.head_wind_force) / self.apparent_wind_force, 2)))
+            self.apparent_wind_angle.set(sp.acos(round((self.true_wind_force * sp.cos(self.angle_between_course_and_true_wind) + self.head_wind_force) / self.apparent_wind_force, 2)))
 
             # Calculate the perpendicular force to the sail area
             self.perpendicular_sail_force.set(self.apparent_wind_force * sp.sin(self.angle_between_sail_and_apparent_wind))
